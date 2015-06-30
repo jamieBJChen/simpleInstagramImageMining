@@ -186,15 +186,23 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     NSString *str = searchBar.text;
     NSLog(@"%@", str);
-    getUserIDUrlSecond = searchBar.text;
-    [self getJson:[NSString stringWithFormat:@"%@%@%@", getUserIDUrlFirst, getUserIDUrlSecond, getUserIDUrlThird]];
-    //[searchBar setShowsCancelButton:NO animated:YES];
-    [self.searchBar resignFirstResponder];
-    [self.imageTableView becomeFirstResponder];
-    [self.view endEditing:YES];
-    [self.searchBar performSelectorOnMainThread:@selector(resignFirstResponder) withObject:nil waitUntilDone:NO];
-    self.searchBar.searchResultsButtonSelected = YES;
-    //isCellClicked = false;
+    NSString *inputStringTest = searchBar.text;
+    NSRange whiteSpaceRange = [inputStringTest rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]];
+    if (whiteSpaceRange.location == NSNotFound){
+        getUserIDUrlSecond = searchBar.text;
+        [self getJson:[NSString stringWithFormat:@"%@%@%@", getUserIDUrlFirst, getUserIDUrlSecond, getUserIDUrlThird]];
+        //[searchBar setShowsCancelButton:NO animated:YES];
+        [self.searchBar resignFirstResponder];
+        [self.imageTableView becomeFirstResponder];
+        [self.view endEditing:YES];
+        [self.searchBar performSelectorOnMainThread:@selector(resignFirstResponder) withObject:nil waitUntilDone:NO];
+        self.searchBar.searchResultsButtonSelected = YES;
+        //isCellClicked = false;
+    }
+    else {
+        UIAlertView *stringErralertView = [[UIAlertView alloc] initWithTitle:@"Input Warning" message:@"No White Space" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [stringErralertView show];
+    }
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
