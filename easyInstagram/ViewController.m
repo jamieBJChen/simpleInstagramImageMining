@@ -197,6 +197,7 @@
         [self.view endEditing:YES];
         [self.searchBar performSelectorOnMainThread:@selector(resignFirstResponder) withObject:nil waitUntilDone:NO];
         self.searchBar.searchResultsButtonSelected = YES;
+        [self.searchDisplayController setActive:NO animated:YES];
         //isCellClicked = false;
     }
     else {
